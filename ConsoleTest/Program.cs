@@ -16,10 +16,71 @@ namespace ConsoleTest
             Console.WriteLine("\n");
 
             ColorTest();
-            
+
             Console.WriteLine("\n");
 
             BrandTest();
+
+            Console.WriteLine("\n");
+
+            CustomerTest();
+
+            Console.WriteLine("\n");
+
+            UserTest();
+
+            Console.WriteLine("\n");
+
+            RentalTest();
+
+        }
+
+        public static void RentalTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            //rentalManager.Add(new Rental(1, 1, 1, DateTime.Now.Date, new DateTime(2021, 2, 15)));
+            //rentalManager.Add(new Rental(2, 5, 2, DateTime.Now.Date, new DateTime(2021, 3, 15)));
+            string messsage = rentalManager.Add(new Rental(3, 3, 4, DateTime.Now.Date, new DateTime(2021, 3, 15))).Message;
+            //rentalManager.Add(new Rental(4, 2, 3, DateTime.Now.Date, new DateTime(2021, 3, 15)));
+            //rentalManager.Add(new Rental(5, 6, 4, DateTime.Now.Date, new DateTime(2021, 3, 16)));
+
+            Console.WriteLine(messsage);
+
+            foreach (var r in rentalManager.GetAll().Data)
+            {
+                Console.WriteLine(r.RentalId + " " + r.CarId + " " + r.CustomerId + " " + r.RentDate + " " + r.ReturnDate);
+            }
+        }
+
+        public static void UserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+
+            //userManager.Add(new User(1, "Mustafa", "Zaimoğlu", "mkz@gmail.com", "12345678"));
+            //userManager.Add(new User(2, "Mehmet", "Badem", "bdm@gmail.com", "87654321"));
+            //userManager.Add(new User(3, "Johnny", "Depp", "depp@gmail.com", "12345678"));
+            //userManager.Add(new User(4, "Fernando", "Sucre", "sucre@gmail.com", "87654321"));
+
+            foreach (var u in userManager.GetAll().Data)
+            {
+                Console.WriteLine(u.UserId + " " + u.FirstName+ " " + u.LastName + " " + u.Email);
+            }
+        }
+
+        public static void CustomerTest()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+
+            //customerManager.Add(new Customer(1, 1, "MKZ Corp"));
+            //customerManager.Add(new Customer(2, 2, "Bademler Gaming"));
+            //customerManager.Add(new Customer(3, 3, "Netflix"));
+            //customerManager.Add(new Customer(4, 4, "Spotify"));
+
+            foreach (var c in customerManager.GetAll().Data)
+            {
+                Console.WriteLine(c.CustomerId + " " + c.UserId + " " + c.CompanyName);
+            }
         }
 
         private static void BrandTest()
@@ -54,7 +115,7 @@ namespace ConsoleTest
 
             foreach (var c in carManager.GetAllDetailsOfCar().Data) // Join yapılmış tam hali
             {
-                Console.WriteLine("ID :" + c.CarId + " " + c.ModelYear + " " + c.ColorName + " " + c.BrandName + " " + c.Description);
+                Console.WriteLine("ID :" + c.CarId + " " + c.ModelYear + " " + c.ColorName + " " + c.BrandName + " " + c.Description + " " + c.DailyPrice + " TL");
             }
 
             Console.WriteLine("\n*** *** *** *** *** *** ***");
