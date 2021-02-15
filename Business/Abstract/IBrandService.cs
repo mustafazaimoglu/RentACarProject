@@ -13,4 +13,5 @@ namespace Business.Abstract
         IResult Delete(Brand b);
         IResult Update(Brand b);
     }
+
 }
