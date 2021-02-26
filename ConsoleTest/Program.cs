@@ -11,39 +11,39 @@ namespace ConsoleTest
         static void Main(string[] args)
         {
             // MKZ
-            CarTest();
+            //CarTest();
 
-            Console.WriteLine("\n");
+            //Console.WriteLine("\n");
 
-            ColorTest();
+            //ColorTest();
 
-            Console.WriteLine("\n");
+            //Console.WriteLine("\n");
 
-            BrandTest();
+            //BrandTest();
 
-            Console.WriteLine("\n");
+            //Console.WriteLine("\n");
 
-            CustomerTest();
+            //CustomerTest();
 
-            Console.WriteLine("\n");
+            //Console.WriteLine("\n");
 
-            UserTest();
+            //UserTest();
 
-            Console.WriteLine("\n");
+            //Console.WriteLine("\n");
 
-            RentalTest();
+            //RentalTest();
 
         }
 
-        public static void RentalTest()
+        private static void RentalTest()
         {
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            //rentalManager.Add(new Rental(1, 1, 1, DateTime.Now.Date, new DateTime(2021, 2, 15)));
-            //rentalManager.Add(new Rental(2, 5, 2, DateTime.Now.Date, new DateTime(2021, 3, 15)));
-            string messsage = rentalManager.Add(new Rental(3, 3, 4, DateTime.Now.Date, new DateTime(2021, 3, 15))).Message;
-            //rentalManager.Add(new Rental(4, 2, 3, DateTime.Now.Date, new DateTime(2021, 3, 15)));
-            //rentalManager.Add(new Rental(5, 6, 4, DateTime.Now.Date, new DateTime(2021, 3, 16)));
+            //rentalManager.Add(new Rental(1, 1, DateTime.Now.Date, new DateTime(2021, 2, 15)));
+            //rentalManager.Add(new Rental(5, 2, DateTime.Now.Date, new DateTime(2021, 3, 15)));
+            string messsage = rentalManager.Add(new Rental(3, 4, DateTime.Now.Date, new DateTime(2021, 3, 15))).Message;
+            //rentalManager.Add(new Rental(2, 3, DateTime.Now.Date, new DateTime(2021, 3, 15)));
+            //rentalManager.Add(new Rental(6, 4, DateTime.Now.Date, new DateTime(2021, 3, 16)));
 
             Console.WriteLine(messsage);
 
@@ -53,14 +53,14 @@ namespace ConsoleTest
             }
         }
 
-        public static void UserTest()
+        private static void UserTest()
         {
             UserManager userManager = new UserManager(new EfUserDal());
 
-            //userManager.Add(new User(1, "Mustafa", "Zaimoğlu", "mkz@gmail.com", "12345678"));
-            //userManager.Add(new User(2, "Mehmet", "Badem", "bdm@gmail.com", "87654321"));
-            //userManager.Add(new User(3, "Johnny", "Depp", "depp@gmail.com", "12345678"));
-            //userManager.Add(new User(4, "Fernando", "Sucre", "sucre@gmail.com", "87654321"));
+            //userManager.Add(new User("Mustafa", "Zaimoğlu", "mkz@gmail.com", "12345678"));
+            //userManager.Add(new User("Mehmet", "Badem", "bdm@gmail.com", "87654321"));
+            //userManager.Add(new User("Johnny", "Depp", "depp@gmail.com", "12345678"));
+            //userManager.Add(new User("Fernando", "Sucre", "sucre@gmail.com", "87654321"));
 
             foreach (var u in userManager.GetAll().Data)
             {
@@ -68,14 +68,14 @@ namespace ConsoleTest
             }
         }
 
-        public static void CustomerTest()
+        private static void CustomerTest()
         {
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
 
-            //customerManager.Add(new Customer(1, 1, "MKZ Corp"));
-            //customerManager.Add(new Customer(2, 2, "Bademler Gaming"));
-            //customerManager.Add(new Customer(3, 3, "Netflix"));
-            //customerManager.Add(new Customer(4, 4, "Spotify"));
+            //customerManager.Add(new Customer(1, "MKZ Corp"));
+            //customerManager.Add(new Customer(2, "Bademler Gaming"));
+            //customerManager.Add(new Customer(3, "Netflix"));
+            //customerManager.Add(new Customer(4, "Spotify"));
 
             foreach (var c in customerManager.GetAll().Data)
             {
@@ -87,6 +87,13 @@ namespace ConsoleTest
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
+            brandManager.Add(new Brand("Nissan"));
+            brandManager.Add(new Brand("Mazda"));
+            brandManager.Add(new Brand("Toyota"));
+            brandManager.Add(new Brand("Honda"));
+            brandManager.Add(new Brand("Mitsubishi"));
+            brandManager.Add(new Brand("Renault"));
+
             foreach (var b in brandManager.GetAll().Data)
             {
                 Console.WriteLine(b.BrandId + " " + b.BrandName);
@@ -96,7 +103,15 @@ namespace ConsoleTest
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
 
-            //colorManager.Update(new Color(8, "Pink"));
+            colorManager.Add(new Color("Yellow"));
+            colorManager.Add(new Color("Green"));
+            colorManager.Add(new Color("Bayside Blue"));
+            colorManager.Add(new Color("Gray"));
+            colorManager.Add(new Color("Obsidian Black"));
+            colorManager.Add(new Color("White"));
+            colorManager.Add(new Color("Purple"));
+            colorManager.Add(new Color("Pink"));
+            colorManager.Add(new Color("Red"));
 
             foreach (var c in colorManager.GetAll().Data)
             {
@@ -108,6 +123,7 @@ namespace ConsoleTest
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
+            /*
             Console.WriteLine(carManager.GetAll().Success);
             Console.WriteLine(carManager.GetAll().Message);
 
@@ -129,6 +145,7 @@ namespace ConsoleTest
             {
                 Console.WriteLine(c.Id + " " + c.BrandId + " " + c.ColorId + " " + c.ModelYear + " " + c.Description);
             }
+            */
         }
     }
 }

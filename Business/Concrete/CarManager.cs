@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -23,6 +24,13 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car c)
         {
+            List<IResult> result = BusinessRules.Run(CheckMaintenanceTime());
+
+            if(result.Count > 0)
+            {
+                return new ErrorDataResult<List<IResult>>(result);
+            }
+
             _carDal.Add(c);
             return new SuccessResult(Messages.CarAdded);
         }
@@ -34,23 +42,27 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
-        public IDataResult<List<Car>> GetAll()
+        public IResult GetAll()
         {
             // İŞ KODLARI
 
-            if (DateTime.Now.Hour == 2)
+            List<IResult> result = BusinessRules.Run(CheckMaintenanceTime());
+
+            if (result.Count > 0)
             {
-                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<IResult>>(result);
             }
 
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
 
-        public IDataResult<List<CarDetailDto>> GetAllDetailsOfCar()
+        public IResult GetAllDetailsOfCar()
         {
-            if (DateTime.Now.Hour == 2)
+            List<IResult> result = BusinessRules.Run(CheckMaintenanceTime());
+
+            if (result.Count > 0)
             {
-                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<IResult>>(result);
             }
 
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetAllDetailsOfCar());
@@ -77,5 +89,16 @@ namespace Business.Concrete
 
             return new SuccessResult(Messages.CarUpdated);
         }
+
+        private IResult CheckMaintenanceTime()
+        {
+            if (DateTime.Now.Hour == 2)
+            {
+                return new ErrorResult(Messages.MaintenanceTime);
+            }
+
+            return new SuccessResult();
+        }
+
     }
 }

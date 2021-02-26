@@ -11,9 +11,8 @@ namespace Entities.Concrete
         {
 
         }
-        public Brand(int brandId, string brandName)
+        public Brand(string brandName)
         {
-            BrandId = brandId;
             BrandName = brandName;
         }
 

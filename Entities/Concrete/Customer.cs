@@ -11,9 +11,8 @@ namespace Entities.Concrete
         {
 
         }
-        public Customer(int customerId, int userId, string companyName)
+        public Customer(int userId, string companyName)
         {
-            CustomerId = customerId;
             UserId = userId;
             CompanyName = companyName;
         }

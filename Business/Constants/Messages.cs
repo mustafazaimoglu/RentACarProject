@@ -14,5 +14,6 @@ namespace Business.Constants
         public static string MaintenanceTime = "Sistem şuan bakımda.";
         public static string CarsListed = "Arabalar listelendi!";
         public static string CarRentTimeError = "Araba henüz dönmedi!";
+        internal static string CarDescriptionTooShort = "Araba tanımı çok kısa...";
     }
 }

@@ -11,9 +11,8 @@ namespace Entities.Concrete
         {
 
         }
-        public Rental(int rentalId, int carId, int customerId, DateTime rentDate, DateTime returnDate)
+        public Rental(int carId, int customerId, DateTime rentDate, DateTime returnDate)
         {
-            RentalId = rentalId;
             CarId = carId;
             CustomerId = customerId;
             RentDate = rentDate;

@@ -11,9 +11,8 @@ namespace Entities.Concrete
         {
 
         }
-        public User(int userId, string firstName, string lastName, string email, string password)
+        public User(string firstName, string lastName, string email, string password)
         {
-            UserId = userId;
             FirstName = firstName;
             LastName = lastName;
             Email = email;

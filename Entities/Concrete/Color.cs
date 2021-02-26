@@ -11,9 +11,9 @@ namespace Entities.Concrete
         {
 
         }
-        public Color(int colorId, string colorName)
+        public Color(string colorName)
         {
-            ColorId = colorId;
+
             ColorName = colorName;
         }
 
