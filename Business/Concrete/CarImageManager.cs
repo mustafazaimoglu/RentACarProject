@@ -30,13 +30,8 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<IResult>>(result);
             }
 
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + "\\Images\\";
+            string path = ImageHelper.MainPath();
             string newGuidPath;
-
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
 
             if (file != null)
             {
@@ -79,13 +74,8 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile file, CarImage ci)
         {
-            string path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + "\\Images\\";
+            string path = ImageHelper.MainPath();
             string newGuidPath;
-
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
 
             if (file != null)
             {

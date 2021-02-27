@@ -24,6 +24,17 @@ namespace Core.Utilities.FileHelper
         {
             File.Delete(path);
         }
+        public static string MainPath()
+        {
+            var path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + "\\Images\\";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return path;
+        }
 
         public static string CreateUniqueName(string extension)
         {
