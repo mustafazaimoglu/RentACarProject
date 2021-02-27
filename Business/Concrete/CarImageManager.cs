@@ -1,10 +1,14 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Business;
+using Core.Utilities.FileHelper;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 namespace Business.Concrete
 {
@@ -17,8 +21,34 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
-        public IResult Add(CarImage ci)
+        public IResult Add(IFormFile file,CarImage ci)
         {
+            var result = BusinessRules.Run(CheckIfImageLimitExceded(ci.CarId));
+
+            if (result.Count > 0)
+            {
+                return new ErrorDataResult<List<IResult>>(result);
+            }
+
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + "\\Images\\";
+            string newGuidPath;
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            if (file != null)
+            {
+                newGuidPath = ImageHelper.UploadImage(file, path);
+            }
+            else
+            {
+                newGuidPath = "default.png";
+            }
+
+            ci.Date = DateTime.Now;
+            ci.ImagePath = path + newGuidPath;
             _carImageDal.Add(ci);
 
             return new SuccessResult();
@@ -27,6 +57,7 @@ namespace Business.Concrete
         public IResult Delete(CarImage ci)
         {
             _carImageDal.Delete(ci);
+            ImageHelper.DeleteImage(ci.ImagePath);
 
             return new SuccessResult();
         }
@@ -36,16 +67,55 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
-        public IDataResult<CarImage> GetById(int id)
+        public IDataResult<List<CarImage>> GetAllImagesByCarId(int carId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(ci => ci.CarId == carId));
         }
 
-        public IResult Update(CarImage ci)
+        public IDataResult<CarImage> GetImageById(int id)
         {
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
+        }
+
+        public IResult Update(IFormFile file, CarImage ci)
+        {
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + "\\Images\\";
+            string newGuidPath;
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            if (file != null)
+            {
+                newGuidPath = ImageHelper.UploadImage(file, path);
+            }
+            else
+            {
+                newGuidPath = "default.png";
+            }
+
+            ci.Date = DateTime.Now;
+            ImageHelper.DeleteImage(ci.ImagePath);
+            ci.ImagePath = path + newGuidPath;
             _carImageDal.Update(ci);
 
             return new SuccessResult();
         }
+
+        private IResult CheckIfImageLimitExceded(int carId)
+        {
+            var result = _carImageDal.GetAll(ci => ci.CarId == carId);
+
+            if(result.Count > 5)
+            {
+                return new ErrorResult(Messages.ImageLimitExceded);
+            }
+
+            return new SuccessResult(Messages.ImageHasBeenAddedSuccessfully);
+        }
+
+
     }
 }

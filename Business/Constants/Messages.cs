@@ -14,6 +14,8 @@ namespace Business.Constants
         public static string MaintenanceTime = "Sistem şuan bakımda.";
         public static string CarsListed = "Arabalar listelendi!";
         public static string CarRentTimeError = "Araba henüz dönmedi!";
-        internal static string CarDescriptionTooShort = "Araba tanımı çok kısa...";
+        internal static string CarDescriptionTooShort = "Araba tanımı çok kısa.";
+        internal static string ImageLimitExceded = "Resim Sınırı Aşıldı. Her araç maximum 5 resme sahip olabilir.";
+        internal static string ImageHasBeenAddedSuccessfully = "Resim başarı ile eklend!";
     }
 }
