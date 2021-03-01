@@ -1,5 +1,5 @@
-﻿using Core.Utilities.Results;
-using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +12,7 @@ namespace Business.Abstract
         IResult Add(User u);
         IResult Delete(User u);
         IResult Update(User u);
+        IDataResult<List<OperationClaim>> GetClaims(User u);
+        IDataResult<User> GetByMail(string email);
     }
 }

@@ -64,7 +64,7 @@ namespace ConsoleTest
 
             foreach (var u in userManager.GetAll().Data)
             {
-                Console.WriteLine(u.UserId + " " + u.FirstName+ " " + u.LastName + " " + u.Email);
+                Console.WriteLine(u.Id + " " + u.FirstName+ " " + u.LastName + " " + u.Email);
             }
         }
 
