@@ -2,6 +2,8 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -22,8 +24,9 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        [SecuredOperation("car.add,admin")]
+        [SecuredOperation("car.add,admin,user")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("Get")]
         public IResult Add(Car c)
         {
             List<IResult> result = BusinessRules.Run(CheckMaintenanceTime());
@@ -44,6 +47,8 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
+        [CacheAspect]
+        //[PerformanceAspect(5)] // İnterceptors a eklendi
         public IResult GetAll()
         {
             // İŞ KODLARI
@@ -70,6 +75,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetAllDetailsOfCar());
         }
 
+        [CacheAspect]
+        //[PerformanceAspect(5)] interceptors a eklendi
         public IDataResult<Car> GetById(int id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));

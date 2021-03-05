@@ -8,16 +8,28 @@ namespace Core.Utilities.FileHelper
 {
     public class ImageHelper
     {
-        public static string UploadImage(IFormFile file, String mainPath)
+
+        public static string UploadImage(IFormFile file)
         {
-            var newGuidPath = CreateUniqueName(Path.GetExtension(file.FileName));
-            using (FileStream fileStream = System.IO.File.Create(mainPath + newGuidPath))
+            string path = MainPath();
+            string newGuidPath;
+
+            if (file != null)
             {
-                file.CopyTo(fileStream);
-                fileStream.Flush();
+                newGuidPath = CreateUniqueName(Path.GetExtension(file.FileName));
+
+                using (FileStream fileStream = System.IO.File.Create(path + newGuidPath))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+            }
+            else
+            {
+                newGuidPath = "default.png";
             }
 
-            return newGuidPath;
+            return path + newGuidPath;
         }
 
         public static void DeleteImage(String path)

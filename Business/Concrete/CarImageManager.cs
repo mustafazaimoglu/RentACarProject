@@ -30,20 +30,22 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<IResult>>(result);
             }
 
-            string path = ImageHelper.MainPath();
-            string newGuidPath;
+            string finalPath = ImageHelper.UploadImage(file);
 
-            if (file != null)
-            {
-                newGuidPath = ImageHelper.UploadImage(file, path);
-            }
-            else
-            {
-                newGuidPath = "default.png";
-            }
+            //string path = ImageHelper.MainPath();
+            //string newGuidPath;
+
+            //if (file != null)
+            //{
+            //    newGuidPath = ImageHelper.UploadImage(file, path);
+            //}
+            //else
+            //{
+            //    newGuidPath = "default.png";
+            //}
 
             ci.Date = DateTime.Now;
-            ci.ImagePath = path + newGuidPath;
+            ci.ImagePath = finalPath;
             _carImageDal.Add(ci);
 
             return new SuccessResult();
@@ -74,21 +76,11 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile file, CarImage ci)
         {
-            string path = ImageHelper.MainPath();
-            string newGuidPath;
-
-            if (file != null)
-            {
-                newGuidPath = ImageHelper.UploadImage(file, path);
-            }
-            else
-            {
-                newGuidPath = "default.png";
-            }
+            string finalPath = ImageHelper.UploadImage(file);
+            ImageHelper.DeleteImage(ci.ImagePath);
 
             ci.Date = DateTime.Now;
-            ImageHelper.DeleteImage(ci.ImagePath);
-            ci.ImagePath = path + newGuidPath;
+            ci.ImagePath = finalPath;
             _carImageDal.Update(ci);
 
             return new SuccessResult();
