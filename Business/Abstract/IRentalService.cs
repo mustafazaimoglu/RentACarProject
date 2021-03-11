@@ -13,5 +13,6 @@ namespace Business.Abstract
         IResult Add(Rental r);
         IResult Update(Rental r);
         IResult Delete(Rental r);
+        IResult GetDetailedRental();
     }
 }
