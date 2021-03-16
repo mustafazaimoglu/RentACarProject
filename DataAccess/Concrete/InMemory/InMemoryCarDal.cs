@@ -57,6 +57,21 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
+        public CarDetailDto GetCarByCarId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarsByBrandId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarsByColorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Car> ReadAll()
         {
             return _myCars;
@@ -75,6 +90,11 @@ namespace DataAccess.Concrete.InMemory
             toUpdate.ModelYear = car.ModelYear;
             toUpdate.DailyPrice = car.DailyPrice;
             toUpdate.Description = car.Description;
+        }
+
+        List<CarDetailDto> ICarDal.GetCarByCarId(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

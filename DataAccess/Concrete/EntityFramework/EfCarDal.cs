@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join brand in context.Brands
                              on car.BrandId equals brand.BrandId
                              join color in context.Colors
-                             on car.ColorId equals color.ColorId 
+                             on car.ColorId equals color.ColorId
                              select new CarDetailDto
                              {
                                  CarId = car.Id,
@@ -36,5 +36,78 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
+
+        public List<CarDetailDto> GetCarsByBrandId(int brandId)
+        {
+            using (RentACarContext context = new RentACarContext())
+            {
+                var result = from car in context.Cars
+                             where car.BrandId == brandId
+                             join brand in context.Brands
+                             on car.BrandId equals brand.BrandId
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+                             select new CarDetailDto
+                             {
+                                 CarId = car.Id,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description,
+                             };
+
+                return result.ToList();
+            }
+        }
+
+        public List<CarDetailDto> GetCarByCarId(int id)
+        {
+            using (RentACarContext context = new RentACarContext())
+            {
+                var result = from car in context.Cars
+                             where car.Id == id
+                             join brand in context.Brands
+                             on car.BrandId equals brand.BrandId
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+                             select new CarDetailDto
+                             {
+                                 CarId = car.Id,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description,
+                             };
+
+                return result.ToList();
+            }
+        }
+
+        public List<CarDetailDto> GetCarsByColorId(int colorId)
+        {
+            using (RentACarContext context = new RentACarContext())
+            {
+                var result = from car in context.Cars
+                             where car.ColorId == colorId
+                             join brand in context.Brands
+                             on car.BrandId equals brand.BrandId
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+                             select new CarDetailDto
+                             {
+                                 CarId = car.Id,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description,
+                             };
+
+                return result.ToList();
+            }
+        }
+
     }
 }
