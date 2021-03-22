@@ -31,7 +31,7 @@ namespace Business.Concrete
         {
             List<IResult> result = BusinessRules.Run(CheckMaintenanceTime());
 
-            if(result.Count > 0)
+            if (result.Count > 0)
             {
                 return new ErrorDataResult<List<IResult>>(result);
             }
@@ -95,6 +95,13 @@ namespace Business.Concrete
         public IDataResult<List<CarDetailDto>> GetCarsByColorId(int id)
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsByColorId(id));
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarsByColorIdAndBrandId(int brandId, int colorId)
+        {
+            var result = _carDal.GetCarsByColorIdAndBrandId(brandId, colorId);
+
+            return new SuccessDataResult<List<CarDetailDto>>(result);
         }
 
         public IResult Update(Car c)
