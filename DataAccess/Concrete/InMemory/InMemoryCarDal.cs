@@ -57,6 +57,11 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
+        public CarDetailDto GetCar(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public CarDetailDto GetCarByCarId(int id)
         {
             throw new NotImplementedException();
@@ -97,7 +102,7 @@ namespace DataAccess.Concrete.InMemory
             toUpdate.Description = car.Description;
         }
 
-        List<CarDetailDto> ICarDal.GetCarByCarId(int id)
+        CarDetailDto ICarDal.GetCarByCarId(int id)
         {
             throw new NotImplementedException();
         }

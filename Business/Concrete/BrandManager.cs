@@ -28,6 +28,10 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        public IDataResult<List<Brand>> GetById(int id)
+        {
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(b => b.BrandId == id));
+        }
 
         public IResult Delete(Brand b)
         {

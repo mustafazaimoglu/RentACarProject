@@ -61,7 +61,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<CarDetailDto> GetCarByCarId(int id)
+        public CarDetailDto GetCarByCarId(int id)
         {
             using (RentACarContext context = new RentACarContext())
             {
@@ -81,7 +81,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Description = car.Description,
                              };
 
-                return result.ToList();
+                return result.Single();
             }
         }
 
@@ -130,6 +130,29 @@ namespace DataAccess.Concrete.EntityFramework
                              };
 
                 return result.ToList();
+            }
+        }
+
+        public CarDetailDto GetCar(int id)
+        {
+            using (RentACarContext context = new RentACarContext())
+            {
+                var result = from car in context.Cars where car.Id == id
+                             join brand in context.Brands
+                             on car.BrandId equals brand.BrandId
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+                             select new CarDetailDto
+                             {
+                                 CarId = car.Id,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description,
+                             };
+
+                return result.Single();
             }
         }
     }
